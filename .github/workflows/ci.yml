@@ -1,7 +1,10 @@
 name: WordPress CI/CD Deploy
 
 on:
-  push:
+ pull_request:
+    branches:
+      - testing
+    push:
     branches:
       - main
 
