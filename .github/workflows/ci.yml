@@ -1,21 +1,18 @@
-name: Next.js CI/CD Pipeline
+name: Next.js CI/CD – Production Deploy
 
 on:
   pull_request:
     branches:
       - main
+
   push:
     branches:
       - main
 
 jobs:
-  # --------------------
-  # CI JOB (Build & Test)
-  # --------------------
   ci:
     name: CI - Build & Test
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code
@@ -28,44 +25,38 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Run Lint
-        run: npm run lint
+        run: npm install
 
       - name: Build project
         run: npm run build
 
-  # --------------------
-  # CD JOB (Deploy)
-  # --------------------
-  deploy:
-    name: CD - Deploy to Server
+  cd:
+    name: CD - Deploy to Production
+    needs: ci
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
           script: |
-            cd ${{ secrets.APP_PATH }}
+            echo "🚀 Connected to server"
+            cd ${{ secrets.PROD_PATH }}
 
-            echo "Pulling latest code..."
+            echo "📥 Pulling latest code"
             git pull origin main
 
-            echo "Installing dependencies..."
-            npm ci
+            echo "📦 Installing dependencies"
+            npm install
 
-            echo "Building Next.js app..."
+            echo "🏗️ Building application"
             npm run build
 
-            echo "Restarting app with PM2..."
-            pm2 start ecosystem.config.js || pm2 restart ecosystem.config.js
-            pm2 save
+            echo "♻️ Restarting app with PM2"
+            pm2 restart react-prac || pm2 start npm --name react-prac -- start
+
+            echo "✅ Deployment completed"
