@@ -1,28 +1,71 @@
-name: WordPress CI/CD Deploy
+name: Next.js CI/CD Pipeline
 
 on:
- pull_request:
+  pull_request:
     branches:
-      - testing
-    push:
+      - main
+  push:
     branches:
       - main
 
 jobs:
-  deploy:
+  # --------------------
+  # CI JOB (Build & Test)
+  # --------------------
+  ci:
+    name: CI - Build & Test
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Server
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+
+  # --------------------
+  # CD JOB (Deploy)
+  # --------------------
+  deploy:
+    name: CD - Deploy to Server
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            cd ${{ secrets.WP_PATH }}
+            cd ${{ secrets.APP_PATH }}
+
+            echo "Pulling latest code..."
             git pull origin main
-            wp cache flush || true
+
+            echo "Installing dependencies..."
+            npm ci
+
+            echo "Building Next.js app..."
+            npm run build
+
+            echo "Restarting app with PM2..."
+            pm2 start ecosystem.config.js || pm2 restart ecosystem.config.js
+            pm2 save
