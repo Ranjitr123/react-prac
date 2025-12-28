@@ -1,5 +1,7 @@
 import React from 'react';
-// import { motion } from 'framer-motion';
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
+
 import { Trophy, Zap, Heart } from 'lucide-react';
 
 const programs = [
