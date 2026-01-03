@@ -26,7 +26,7 @@ const Navbar = () => {
           <li><a href="#home" className="hover:text-primary">Home</a></li>
           <li><a href="#programs" className="hover:text-primary">Programs</a></li>
           <li><a href="#pricing" className="hover:text-primary">Pricing</a></li>
-          <li><a href="#contact" className="hover:text-primary">Contact</a></li>
+          <li><a href="#contact" className="hover:text-primary">Contact Us</a></li>
         </ul>
 
         <a href="#contact" className="hidden md:block btn btn-primary py-2 px-6">Join Now</a>
