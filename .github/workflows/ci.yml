@@ -1,17 +1,13 @@
-name: Next.js CI/CD – Production Deploy
+name: React (Vite) CI/CD – Production Deploy
 
 on:
-  pull_request:
-    branches:
-      - main
-
   push:
     branches:
       - main
 
 jobs:
   ci:
-    name: CI - Build & Test
+    name: CI - Build
     runs-on: ubuntu-latest
 
     steps:
@@ -33,7 +29,6 @@ jobs:
   cd:
     name: CD - Deploy to Production
     needs: ci
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +39,8 @@ jobs:
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
+            set -e
+
             echo "🚀 Connected to server"
             cd ${{ secrets.PROD_PATH }}
 
@@ -56,7 +53,11 @@ jobs:
             echo "🏗️ Building application"
             npm run build
 
-            echo "♻️ Restarting app with PM2"
-            pm2 restart react-prac || pm2 start npm --name react-prac -- start
+            echo "♻️ Restarting app with PM2 on port 2585"
+
+            pm2 delete react-prac || true
+            pm2 start serve --name react-prac -- -s dist -l 2585
+
+            pm2 save
 
             echo "✅ Deployment completed"
