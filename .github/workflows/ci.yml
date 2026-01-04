@@ -46,7 +46,7 @@ jobs:
             cd ${{ secrets.PROD_PATH }}
 
             echo "📥 Pulling latest code"
-            git pull origin ${{ github.ref_name }}
+            git pull origin main
 
             echo "📦 Installing dependencies"
             npm install
