@@ -10,11 +10,11 @@ const Hero = () => {
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="/assets/hero.png"
-                    alt="Gym Background"
-                    className="w-full h-full object-cover opacity-60 scale-110"
+                    src="/assets/school_hero.png"
+                    alt="School Campus"
+                    className="w-full h-full object-cover opacity-60 scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
             </div>
 
             <div className="container relative z-10">
@@ -25,25 +25,25 @@ const Hero = () => {
                     className="max-w-2xl"
                 >
                     <span className="text-primary font-bold tracking-[0.3em] uppercase block mb-4">
-                        Transform Your Body
+                        Unlock Your Potential
                     </span>
                     <h1 className="text-6xl md:text-8xl mb-6 leading-tight">
-                        BE <span className="text-primary">STRONGER</span><br />
-                        BE BETTER
+                        LEARN <span className="text-primary">TODAY</span><br />
+                        LEAD TOMORROW
                     </h1>
-                    <p className="text-text-muted text-lg mb-10 max-w-lg">
-                        Experience the ultimate fitness journey with professional trainers and state-of-the-art equipment. Your transformation starts here.
+                    <p className="text-gray-300 text-lg mb-10 max-w-lg">
+                        Empowering students with knowledge, innovation, and character. Join a community dedicated to excellence in education.
                     </p>
 
                     <div className="flex gap-4 flex-col sm:flex-row">
-                        <button className="btn btn-primary">
-                            Get Started <ChevronRight size={20} />
-                        </button>
+                        <a href="#admission" className="btn btn-primary">
+                            Apply Now <ChevronRight size={20} />
+                        </a>
                         <button className="btn btn-outline">
                             <span className="w-10 h-10 border border-primary rounded-full flex items-center justify-center mr-2">
                                 <Play size={16} fill="currentColor" />
                             </span>
-                            Watch Video
+                            Campus Tour
                         </button>
                     </div>
                 </motion.div>
@@ -53,16 +53,16 @@ const Hero = () => {
             <div className="absolute bottom-10 right-10 hidden lg:block">
                 <div className="flex gap-12">
                     <div>
-                        <h3 className="text-4xl text-primary">500+</h3>
-                        <p className="text-xs uppercase tracking-widest text-text-muted">Members</p>
+                        <h3 className="text-4xl text-primary">2000+</h3>
+                        <p className="text-xs uppercase tracking-widest text-gray-400">Students</p>
+                    </div>
+                    <div>
+                        <h3 className="text-4xl text-primary">150+</h3>
+                        <p className="text-xs uppercase tracking-widest text-gray-400">Teachers</p>
                     </div>
                     <div>
                         <h3 className="text-4xl text-primary">50+</h3>
-                        <p className="text-xs uppercase tracking-widest text-text-muted">Classes</p>
-                    </div>
-                    <div>
-                        <h3 className="text-4xl text-primary">20+</h3>
-                        <p className="text-xs uppercase tracking-widest text-text-muted">Trainers</p>
+                        <p className="text-xs uppercase tracking-widest text-gray-400">Awards</p>
                     </div>
                 </div>
             </div>

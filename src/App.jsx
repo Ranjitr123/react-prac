@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Programs from './components/Programs';
-import Pricing from './components/Pricing';
+import Courses from './components/Courses';
+import AdmissionForm from './components/AdmissionForm';
 import Footer from './components/Footer';
 
 function App() {
@@ -11,8 +11,8 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Programs />
-        <Pricing />
+        <Courses />
+        <AdmissionForm />
       </main>
       <Footer />
     </div>
