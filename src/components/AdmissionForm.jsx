@@ -30,7 +30,7 @@ const AdmissionForm = () => {
         setStatus('submitting');
 
         try {
-            const response = await fetch('http://localhost:3000/api/admissions', {
+            const response = await fetch(`${window.location.protocol}//${window.location.hostname}:3000/api/admissions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
