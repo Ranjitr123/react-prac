@@ -49,15 +49,20 @@ jobs:
 
             echo "📦 Installing dependencies"
             npm install
+            cd server && npm install && cd ..
 
             echo "🏗️ Building application"
             npm run build
 
-            echo "♻️ Restarting app with PM2 on port 2585"
-
+            echo "♻️ Restarting apps with PM2"
+            
+            # Frontend
             pm2 delete react-prac || true
             pm2 start serve --name react-prac -- -s dist -l 2585
 
-            pm2 save
+            # Backend
+            pm2 delete school-backend || true
+            pm2 start server/index.js --name school-backend
 
+            pm2 save
             echo "✅ Deployment completed"
