@@ -1,8 +1,31 @@
+# Dependencies
 node_modules
-dist
-.git
-.github
-Dockerfile
-.dockerignore
 npm-debug.log
-README.md
+yarn-error.log
+pnpm-debug.log*
+
+# Build output
+dist
+build
+
+# IDEs and Editors
+.idea
+.vscode
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env*
