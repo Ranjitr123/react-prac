@@ -25,6 +25,7 @@ const dbConfig = {
 };
 
 let db;
+let lastDbError = null;
 
 async function initializeDatabase() {
   try {
@@ -61,8 +62,10 @@ async function initializeDatabase() {
     
     await db.query(createTableQuery);
     console.log('Admissions table checked/created.');
+    lastDbError = null;
 
   } catch (error) {
+    lastDbError = error.message;
     console.error('Database connection failed. Server will run but DB features will be unavailable.');
     console.error('Error details:', error.message);
   }
@@ -72,6 +75,19 @@ initializeDatabase();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+app.get('/api/debug-db', (req, res) => {
+    res.json({
+        dbConnected: !!db,
+        lastError: lastDbError,
+        config: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            database: process.env.DB_NAME,
+            hasPassword: !!process.env.DB_PASSWORD
+        }
+    });
 });
 
 app.post('/api/admissions', async (req, res) => {

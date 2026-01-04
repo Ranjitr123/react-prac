@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - testing
 
 jobs:
   ci:
@@ -45,7 +46,7 @@ jobs:
             cd ${{ secrets.PROD_PATH }}
 
             echo "📥 Pulling latest code"
-            git pull origin main
+            git pull origin ${{ github.ref_name }}
 
             echo "📦 Installing dependencies"
             npm install
